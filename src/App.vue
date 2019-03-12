@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" dark>
+  <v-app id="inspire" :dark="isDark">
     <v-navigation-drawer
       v-model="drawer"
       clipped
@@ -7,8 +7,8 @@
       app
     >
       <v-list dense>
-        <v-list-tile @click="">
-          <v-list-tile-action>
+        <v-list-tile @click="changeDarkTheme">
+          <v-list-tile-action @click="">
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
@@ -59,10 +59,22 @@
 <script>
   export default {
     data: () => ({
-      drawer: null
+      drawer: null,
+      isDark: false
     }),
     props: {
       source: String
+    },
+    methods: {
+      bindClick() {
+        console.log('click')
+      },
+      changeDarkTheme() {
+        this.isDark = !this.isDark
+      }
+    },
+    mounted() {
+
     }
   }
 </script>
