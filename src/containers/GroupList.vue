@@ -9,8 +9,9 @@
       <template v-for="(group, index) in groupInfo">
         <v-list-tile
           :key="index"
+          ripple
           avatar
-          @click=""
+          @click="selectGroup(group.group_id)"
         >
           <v-list-tile-avatar>
             <img :src="group.avatar_url">
@@ -33,16 +34,14 @@
 
     data () {
       return {
-        items: [
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            title: 'Brunch this weekend?',
-            subtitle: "aaaaaaa"
-          }
-        ],
         groupInfo: [
 
         ]
+      }
+    },
+    methods: {
+      selectGroup(groupId) {
+        this.$store.commit('changeGroupId', groupId)
       }
     },
     mounted() {

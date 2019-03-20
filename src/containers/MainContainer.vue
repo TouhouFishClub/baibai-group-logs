@@ -3,6 +3,7 @@
     <v-container fluid fill-height>
       <v-layout justify-center align-center>
         <v-flex shrink>
+          {{$store.state.actionGroupId}}
           <v-tooltip right>
             <template v-slot:activator="{ on }">
               <v-btn href="" icon large target="_blank" v-on="on">
