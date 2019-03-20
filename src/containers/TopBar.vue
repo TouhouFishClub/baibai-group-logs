@@ -4,9 +4,14 @@
     <v-toolbar-title>Baibai Group Logs</v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <v-btn icon @click="changeDarkTheme">
-      <v-icon>{{$store.state.isDark ? 'wb_sunny' : 'brightness_2'}}</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn icon large target="_blank" v-on="on" @click="changeDarkTheme">
+          <v-icon>{{$store.state.isDark ? 'wb_sunny' : 'brightness_2'}}</v-icon>
+        </v-btn>
+      </template>
+      <span>{{$store.state.isDark ? '关闭da♂rk模式' : '开启da♂rk模式'}}</span>
+    </v-tooltip>
   </v-toolbar>
 </template>
 
