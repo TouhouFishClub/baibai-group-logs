@@ -12,6 +12,7 @@
           ripple
           avatar
           @click="selectGroup(group.group_id)"
+          :color="group.group_id == $store.state.actionGroupId ? 'blue': ''"
         >
           <v-list-tile-avatar>
             <img :src="group.avatar_url">
