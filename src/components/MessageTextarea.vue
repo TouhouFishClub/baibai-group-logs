@@ -13,7 +13,7 @@
 
 <script>
   export default {
-    name: "message-input"
+    name: "message-textarea"
   }
 </script>
 
