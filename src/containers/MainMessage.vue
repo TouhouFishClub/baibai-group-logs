@@ -1,27 +1,52 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout row justify-center align-center>
-      <v-flex shrink>
-        {{$store.state.actionGroupId}}
-        <v-tooltip right>
-          <template v-slot:activator="{ on }">
-            <v-btn href="" icon large target="_blank" v-on="on">
-              <v-icon large>code</v-icon>
-            </v-btn>
-          </template>
-          <span>Source</span>
-        </v-tooltip>
-      </v-flex>
+  <v-container fluid fill-height test-con>
+    <v-layout column>
+      <div v-for="message in messageData">
+        <p>{{message.uid}}</p>
+        <p>{{message.n}}</p>
+        <p>{{message.ts}}</p>
+        <p>{{message.d}}</p>
+        <img :src="message.avatar" alt="">
+        <hr>
+      </div>
     </v-layout>
   </v-container>
 </template>
 
 <script>
   export default {
-    name: "main-message"
+    name: "main-message",
+    data() {
+      return {
+        nowGroupId: this.$store.getters.nowGroupId,
+        messageData:[]
+      }
+    },
+    computed: {
+      getGroupId() {
+        return this.$store.getters.nowGroupId
+      }
+    },
+    watch: {
+      getGroupId(val, oldVal) {
+        this.$axios.get(`http://flanb.msharebox.com:10086/chathistory?gid=${this.$store.getters.nowGroupId}&ts=`)
+          .then(res => {
+            this.messageData = res.data.d.map(msg => Object.assign({
+              avatar: `http://q1.qlogo.cn/g?b=qq&nk=${msg.uid}&s=100`
+            }, msg))
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        this.nowGroupId = this.$store.getters.nowGroupId
+      }
+    }
   }
 </script>
 
 <style scoped>
-
+  .test-con {
+    overflow: scroll;
+    max-height: 100%;
+  }
 </style>

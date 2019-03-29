@@ -24,5 +24,8 @@ export default new Vuex.Store({
     changeGroup() {
 
     }
+  },
+  getters: {
+    nowGroupId: state => state.actionGroupId
   }
 })
