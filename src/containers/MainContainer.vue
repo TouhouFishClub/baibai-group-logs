@@ -4,9 +4,7 @@
       <v-flex>
         bbb
       </v-flex>
-      <v-flex flex-content-height>
-        aaa
-      </v-flex>
+      <MessageTextarea></MessageTextarea>
     </v-layout>
     <!--<v-container fluid fill-height>-->
       <!--<v-layout row>-->
@@ -30,17 +28,15 @@
 </template>
 
 <script>
+  import MessageTextarea from '@/components/MessageTextarea'
   export default {
     name: "main-container",
+    components: {
+      MessageTextarea
+    }
   }
 </script>
 
 <style scoped>
-  .flex-content-height {
-    max-height: 180px;
-    min-height: 100px;
-    border-top: 1px solid darkgrey;
-    padding: 15px;
-  }
 
 </style>
