@@ -1,19 +1,22 @@
 <template>
   <v-container fluid fill-height test-con>
     <v-layout column>
-      <div v-for="message in messageData">
-        <p>{{message.uid}}</p>
-        <p>{{message.n}}</p>
-        <p>{{message.ts}}</p>
-        <p>{{message.d}}</p>
-        <img :src="message.avatar" alt="">
-        <hr>
-      </div>
+      <template v-for="message in messageData">
+        <MessageBubble
+          :userId="message.uid"
+          :nick="message.n"
+          :timestamp="message.ts"
+          :message="message.d"
+          :avatar="message.avatar"
+        >
+        </MessageBubble>
+      </template>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+  import MessageBubble from '@/components/MessageBubble'
   export default {
     name: "main-message",
     data() {
@@ -21,6 +24,9 @@
         nowGroupId: this.$store.getters.nowGroupId,
         messageData:[]
       }
+    },
+    components: {
+      MessageBubble
     },
     computed: {
       getGroupId() {
