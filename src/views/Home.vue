@@ -21,3 +21,12 @@
     },
   }
 </script>
+
+<style scoped>
+  * {
+    word-break: break-all;
+  }
+  #inspire{
+    height: 100%;
+  }
+</style>

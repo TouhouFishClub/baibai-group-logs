@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="main-content">
     <v-layout align-space-between justify-space-between column fill-height>
       <MainMessage></MainMessage>
       <MessageTextarea></MessageTextarea>
@@ -20,5 +20,7 @@
 </script>
 
 <style scoped>
-
+  .main-content {
+    height: 100%;
+  }
 </style>
