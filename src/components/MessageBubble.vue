@@ -5,7 +5,11 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <div class="msg-text">{{message}}</div>
+    <div class="msg-text">
+      <p v-for="msgClip in message.split('\n')">
+        {{msgClip}}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -70,6 +74,9 @@ export default {
     word-break: break-all;
     border-radius: 10px;
     position: relative;
+    p {
+      margin-bottom: 0;
+    }
     &:after {
       content: "";
       height: 0;
