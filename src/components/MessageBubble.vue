@@ -34,8 +34,7 @@ export default {
   methods: {},
   filters: {
     fmtTime(data) {
-      let time = data ? formatTime(data) : "";
-      return time;
+      return data ? formatTime(data) : ""
     }
   }
 };
