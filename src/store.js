@@ -25,7 +25,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    changeGroup({ commit }, { group_name, group_id }) {
+    changeGroup({ commit }, { isMobile, group_name, group_id }) {
+      if(isMobile){
+        commit('tapDrawer')
+      }
       commit('changeGroupId', group_id)
       commit('changeTitle', group_name)
     }

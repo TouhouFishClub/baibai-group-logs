@@ -4,6 +4,7 @@
     clipped
     fixed
     app
+    ref="drawer"
   >
     <v-list two-line>
       <template v-for="(group, index) in groupInfo">
@@ -42,7 +43,9 @@
     },
     methods: {
       selectGroup(group) {
-        this.$store.dispatch('changeGroup', group)
+        this.$store.dispatch('changeGroup', Object.assign({
+          isMobile: this.$refs.drawer.isMobile
+        }, group))
       }
     },
     mounted() {
