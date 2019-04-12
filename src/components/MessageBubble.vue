@@ -31,9 +31,8 @@ export default {
   },
   filters: {
     fmtTime(data) {
-      let time;
-      if (data) {
-        time = new Date(data);
+      let time = data ? new Date(data) : "";
+      if (time) {
         let year = time.getFullYear();
         let month = time.getMonth();
         let day = time.getDate();
@@ -45,9 +44,9 @@ export default {
         minute = minute < 10 ? "0" + minute : minute;
         hour = hour < 10 ? "0" + hour : hour;
         second = second < 10 ? "0" + second : second;
-        return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+        time = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
       }
-      return data;
+      return time;
     }
   }
 };
