@@ -52,7 +52,7 @@
 
 <style scoped>
   .test-con {
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 100%;
   }
 </style>
