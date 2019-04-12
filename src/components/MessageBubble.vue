@@ -5,12 +5,16 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <div class="msg-text">{{message}}</div>
+    <div class="msg-text" v-html="msg"></div>
   </div>
 </template>
 
 <script>
 import formatTime from "@/utils/formatTime.js";
+// 时间格式化工具函数
+
+import formatImage from "@/utils/formatImage.js";
+// 图片信息转换工具函数
 
 export default {
   name: "message-bubble",
@@ -31,7 +35,11 @@ export default {
       default: ""
     }
   },
-  methods: {},
+  computed: {
+    msg() {
+      return formatImage(this.message);
+    }
+  },
   filters: {
     fmtTime(data) {
       let time = data ? formatTime(data) : "";
@@ -82,9 +90,16 @@ export default {
       left: -12px;
       top: 10px;
     }
+  }
+}
+</style>
+<style lang="less">
+.message-item {
+  .msg-text {
     .msg-image {
       max-width: 100%;
     }
   }
 }
 </style>
+>
