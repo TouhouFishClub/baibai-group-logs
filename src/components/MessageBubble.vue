@@ -42,8 +42,7 @@ export default {
   },
   filters: {
     fmtTime(data) {
-      let time = data ? formatTime(data) : "";
-      return time;
+      return data ? formatTime(data) : "";
     }
   }
 };
@@ -79,6 +78,9 @@ export default {
     word-break: break-all;
     border-radius: 10px;
     position: relative;
+    p {
+      margin-bottom: 0;
+    }
     &:after {
       content: "";
       height: 0;
