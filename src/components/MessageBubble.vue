@@ -92,16 +92,9 @@ export default {
       left: -12px;
       top: 10px;
     }
-  }
-}
-</style>
-<style lang="less">
-.message-item {
-  .msg-text {
     .msg-image {
       max-width: 100%;
     }
   }
 }
 </style>
->
