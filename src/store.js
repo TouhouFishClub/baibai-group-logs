@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     drawer: null,
     isDark: false,
-    actionGroupId: 0
+    actionGroupId: 0,
+    titleName: 'Baibai Group Logs'
   },
   mutations: {
     tapDrawer(state) {
@@ -18,11 +19,15 @@ export default new Vuex.Store({
     },
     changeGroupId(state, groupId) {
       state.actionGroupId = groupId
-    }
+    },
+    changeTitle(state, title) {
+      state.titleName = title
+    },
   },
   actions: {
-    changeGroup() {
-
+    changeGroup({ commit }, { group_name, group_id }) {
+      commit('changeGroupId', group_id)
+      commit('changeTitle', group_name)
     }
   },
   getters: {

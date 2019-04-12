@@ -11,7 +11,7 @@
           :key="index"
           ripple
           avatar
-          @click="selectGroup(group.group_id)"
+          @click="selectGroup(group)"
           :color="group.group_id == $store.state.actionGroupId ? 'blue': ''"
         >
           <v-list-tile-avatar>
@@ -41,8 +41,8 @@
       }
     },
     methods: {
-      selectGroup(groupId) {
-        this.$store.commit('changeGroupId', groupId)
+      selectGroup(group) {
+        this.$store.dispatch('changeGroup', group)
       }
     },
     mounted() {

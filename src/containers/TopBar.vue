@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app fixed clipped-left>
     <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>Baibai Group Logs</v-toolbar-title>
+    <v-toolbar-title>{{$store.state.titleName}}</v-toolbar-title>
 
     <v-spacer></v-spacer>
     <v-tooltip left>
