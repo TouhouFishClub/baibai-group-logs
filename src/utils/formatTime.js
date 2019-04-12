@@ -1,4 +1,7 @@
-export default formatTime = timestamp => {
+function addZero(data) {
+  return data < 10 ? "0" + data : data;
+}
+export default timestamp => {
   let time = new Date(timestamp)
-  return `${time.getFullYear()}-${this.addZero(time.getMonth() + 1)}-${this.addZero(time.getDate())} ${this.addZero(time.getHours())}:${this.addZero(time.getMinutes())}:${this.addZero(time.getSeconds())}`
+  return `${time.getFullYear()}-${addZero(time.getMonth() + 1)}-${addZero(time.getDate())} ${addZero(time.getHours())}:${addZero(time.getMinutes())}:${addZero(time.getSeconds())}`
 }
