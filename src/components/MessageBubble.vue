@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import formatTime from "@/utils/formatTime.js";
+
 export default {
   name: "message-bubble",
   props: {
@@ -29,23 +31,10 @@ export default {
       default: ""
     }
   },
+  methods: {},
   filters: {
     fmtTime(data) {
-      let time = data ? new Date(data) : "";
-      if (time) {
-        let year = time.getFullYear();
-        let month = time.getMonth();
-        let day = time.getDate();
-        let hour = time.getHours();
-        let minute = time.getMinutes();
-        let second = time.getSeconds();
-        month = month < 10 ? "0" + month : month;
-        day = day < 10 ? "0" + day : day;
-        minute = minute < 10 ? "0" + minute : minute;
-        hour = hour < 10 ? "0" + hour : hour;
-        second = second < 10 ? "0" + second : second;
-        time = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-      }
+      let time = data ? formatTime(data) : "";
       return time;
     }
   }
