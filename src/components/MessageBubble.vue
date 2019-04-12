@@ -38,6 +38,7 @@
   .message-item {
     margin-bottom: 20px;
     padding-left: 55px;
+    padding-right: 40px;
     position: relative;
     .user-avatar {
       position: absolute;
