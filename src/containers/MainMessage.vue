@@ -50,7 +50,6 @@ export default {
                   )
                 )
               );
-              console.log(this.messageData);
               setTimeout(() => {
                 this.bind = true;
               }, 3000);
