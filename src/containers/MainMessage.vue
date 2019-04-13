@@ -31,6 +31,7 @@ export default {
         e.target.scrollTop + e.target.clientHeight + 100 >=
         e.target.scrollHeight
       ) {
+        this.bind = false;
         this.$axios
           .get(
             `http://flanb.msharebox.com:10086/chathistory?gid=${
@@ -49,8 +50,7 @@ export default {
                   )
                 )
               );
-            } else {
-              this.bind = false;
+              this.bind = true;
             }
           })
           .catch(err => {
@@ -85,6 +85,7 @@ export default {
               msg
             )
           );
+          console.log(this.messageData);
         })
         .catch(err => {
           console.log(err);
