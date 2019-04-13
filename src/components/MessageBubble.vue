@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 .message-item {
   margin-bottom: 20px;
   padding-left: 55px;
