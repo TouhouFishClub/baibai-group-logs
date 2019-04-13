@@ -50,7 +50,10 @@ export default {
                   )
                 )
               );
-              this.bind = true;
+              console.log(this.messageData);
+              setTimeout(() => {
+                this.bind = true;
+              }, 3000);
             }
           })
           .catch(err => {
