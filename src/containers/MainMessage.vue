@@ -16,11 +16,11 @@
 
 <script>
 import MessageBubble from "@/components/MessageBubble";
+import { mapGetters } from 'vuex'
 export default {
   name: "main-message",
   data() {
     return {
-      nowGroupId: this.$store.getters.nowGroupId,
       messageData: []
     };
   },
@@ -28,17 +28,15 @@ export default {
     MessageBubble
   },
   computed: {
-    getGroupId() {
-      return this.$store.getters.nowGroupId;
-    }
+    ...mapGetters([
+      'nowGroupId'
+    ])
   },
   watch: {
-    getGroupId(val, oldVal) {
+    nowGroupId(val, oldVal) {
       this.$axios
         .get(
-          `http://flanb.msharebox.com:10086/chathistory?gid=${
-            this.$store.getters.nowGroupId
-          }&ts=`
+          `http://flanb.msharebox.com:10086/chathistory?gid=${this.nowGroupId}&ts=`
         )
         .then(res => {
           this.$refs.messageBox.scrollTop = 0;
@@ -54,7 +52,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-      this.nowGroupId = this.$store.getters.nowGroupId;
     }
   }
 };
