@@ -5,19 +5,27 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <div class="msg-text" v-html="msg"></div>
+    <div class="msg-text" v-html="msg">
+
+    </div>
+    <MediaMessage :msg-data="checkMsgType"></MediaMessage>
   </div>
 </template>
 
 <script>
 import formatTime from "@/utils/formatTime.js";
 // 时间格式化工具函数
+import cqMsgClip from "@/utils/cqMsgClip.js"
+import MediaMessage from "@/components/MediaMessage"
 
 import formatImage from "@/utils/formatImage.js";
 // 图片信息转换工具函数
 
 export default {
   name: "message-bubble",
+  components: {
+    MediaMessage
+  },
   props: {
     avatar: {
       default: ""
@@ -36,6 +44,27 @@ export default {
     }
   },
   computed: {
+    checkMsgType() {
+      let msgObj = []
+      this.message.split('[CQ:').forEach((msgClip, index) => {
+        if(index == 0){
+          msgObj.push({
+            cqType: 'text',
+            msg: msgClip
+          })
+        } else {
+          let sp = msgClip.split(']')
+          msgObj.push(cqMsgClip(sp[0]))
+          msgObj.push({
+            cqType: 'text',
+            msg: sp[1]
+          })
+        }
+      })
+      console.log(msgObj)
+      return msgObj
+    },
+
     msg() {
       return formatImage(this.message);
     }
@@ -78,6 +107,7 @@ export default {
     word-break: break-all;
     border-radius: 10px;
     position: relative;
+    min-height: 40px;
     p {
       margin-bottom: 0;
     }
