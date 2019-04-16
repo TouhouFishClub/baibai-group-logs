@@ -32,26 +32,24 @@ export default {
       'actionGroupId'
     ])
   },
-  watch: {
-    actionGroupId(val, oldVal) {
-      this.$axios
-        .get(
-          `http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=`
-        )
+  methods: {
+    getMessageData(ts = '') {
+      this.$axios.get(`http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
         .then(res => {
           this.$refs.messageBox.scrollTop = 0;
-          this.messageData = res.data.d.map(msg =>
-            Object.assign(
-              {
-                avatar: `http://q1.qlogo.cn/g?b=qq&nk=${msg.uid}&s=100`
-              },
-              msg
-            )
-          );
+          this.messageData = res.data.d.reverse().map(msg => Object.assign({
+            avatar: `http://q1.qlogo.cn/g?b=qq&nk=${msg.uid}&s=100`
+          }, msg)).concat(this.messageData)
         })
         .catch(err => {
           console.log(err);
         });
+    }
+  },
+  watch: {
+    actionGroupId(val, oldVal) {
+      this.messageData = []
+      this.getMessageData()
     }
   }
 };
