@@ -32,8 +32,5 @@ export default new Vuex.Store({
       commit('changeGroupId', group_id)
       commit('changeTitle', group_name)
     }
-  },
-  getters: {
-    nowGroupId: state => state.actionGroupId
   }
 })

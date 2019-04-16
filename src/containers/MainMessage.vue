@@ -16,7 +16,7 @@
 
 <script>
 import MessageBubble from "@/components/MessageBubble";
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: "main-message",
   data() {
@@ -28,15 +28,15 @@ export default {
     MessageBubble
   },
   computed: {
-    ...mapGetters([
-      'nowGroupId'
+    ...mapState([
+      'actionGroupId'
     ])
   },
   watch: {
-    nowGroupId(val, oldVal) {
+    actionGroupId(val, oldVal) {
       this.$axios
         .get(
-          `http://flanb.msharebox.com:10086/chathistory?gid=${this.nowGroupId}&ts=`
+          `http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=`
         )
         .then(res => {
           this.$refs.messageBox.scrollTop = 0;
