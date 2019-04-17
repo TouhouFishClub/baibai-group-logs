@@ -5,9 +5,9 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <div class="msg-text" v-html="msg">
+    <!--<div class="msg-text" v-html="msg">-->
 
-    </div>
+    <!--</div>-->
     <MediaMessage :msg-data="checkMsgType"></MediaMessage>
   </div>
 </template>
@@ -101,33 +101,6 @@ export default {
       margin-left: 5px;
       color: #afafaf;
       font-size: 12px;
-    }
-  }
-  .msg-text {
-    margin-top: 10px;
-    padding: 10px;
-    background: rgba(155, 155, 155, 0.2);
-    display: inline-block;
-    word-break: break-all;
-    border-radius: 10px;
-    position: relative;
-    min-height: 40px;
-    p {
-      margin-bottom: 0;
-    }
-    &:after {
-      content: "";
-      height: 0;
-      width: 0;
-      border: 6px solid rgba(155, 155, 155, 0.2);
-      border-bottom-color: transparent;
-      border-left-color: transparent;
-      position: absolute;
-      left: -12px;
-      top: 10px;
-    }
-    .msg-image {
-      max-width: 100%;
     }
   }
 }
