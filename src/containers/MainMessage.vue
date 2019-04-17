@@ -56,6 +56,12 @@ export default {
           console.log(err);
         });
     },
+    refetchMsg() {
+      // 清空并防止触发重复渲染
+      this.messageData.length = 0
+
+      this.getMessageData()
+    }
   },
   mounted(){
     this.$refs.messageBox.addEventListener('scroll', e => {
@@ -70,10 +76,7 @@ export default {
   },
   watch: {
     actionGroupId(val, oldVal) {
-      // 清空并防止触发重复渲染
-      this.messageData.length = 0
-
-      this.getMessageData()
+      this.refetchMsg()
     }
   }
 };
