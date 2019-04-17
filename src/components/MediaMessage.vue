@@ -8,6 +8,7 @@
       </template>
       <span v-else>{{JSON.stringify(m)}}</span>
     </template>
+    <!--<p>{{JSON.stringify(msgData)}}</p>-->
   </div>
 </template>
 
@@ -53,6 +54,7 @@
     }
     .msg-image {
       max-width: 100%;
+      vertical-align:bottom;
     }
   }
 </style>
