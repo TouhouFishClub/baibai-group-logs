@@ -5,9 +5,6 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <!--<div class="msg-text" v-html="msg">-->
-
-    <!--</div>-->
     <MediaMessage :msg-data="checkMsgType"></MediaMessage>
   </div>
 </template>
@@ -17,9 +14,6 @@ import formatTime from "@/utils/formatTime.js";
 // 时间格式化工具函数
 import cqMsgClip from "@/utils/cqMsgClip.js"
 import MediaMessage from "@/components/MediaMessage"
-
-import formatImage from "@/utils/formatImage.js";
-// 图片信息转换工具函数
 
 export default {
   name: "message-bubble",
@@ -65,7 +59,6 @@ export default {
           }
         }
       })
-      // console.log(msgObj)
       return msgObj
     },
 
