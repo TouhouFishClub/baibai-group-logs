@@ -8,7 +8,8 @@ export default new Vuex.Store({
     drawer: null,
     isDark: false,
     actionGroupId: 0,
-    titleName: 'Baibai Group Logs'
+    titleName: 'Baibai Group Logs',
+    updateMsg: 0
   },
   mutations: {
     tapDrawer(state) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     changeTitle(state, title) {
       state.titleName = title
+    },
+    updateMsg(state, ts) {
+      state.updateMsg = ts
     },
   },
   actions: {

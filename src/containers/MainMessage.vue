@@ -34,7 +34,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'actionGroupId'
+      'actionGroupId',
+      'updateMsg'
     ])
   },
   methods: {
@@ -76,6 +77,9 @@ export default {
   },
   watch: {
     actionGroupId(val, oldVal) {
+      this.refetchMsg()
+    },
+    updateMsg(val, oldVal){
       this.refetchMsg()
     }
   }
