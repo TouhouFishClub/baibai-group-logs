@@ -1,7 +1,7 @@
 <template>
   <div class="msg-text">
     <template v-for="m in msgData">
-      <span v-if="m.cqType == 'text'">{{m.msg}}</span>
+      <span v-if="m.cqType == 'text'" v-html="formatText(m.msg)"></span>
       <template v-else-if="m.cqType == 'image'">
         <img class="msg-image" v-if="m.url" :src="`http://flanb.msharebox.com:10086/image?url=${m.url}`">
         <img class="msg-image" v-else :src="`http://flanb.msharebox.com:10086/image?d=${m.file}`">
@@ -17,6 +17,11 @@
     props: {
       msgData: {
         require: true
+      }
+    },
+    methods: {
+      formatText(msg) {
+        return msg.replace(/\n/g, '<br>')
       }
     }
   }
