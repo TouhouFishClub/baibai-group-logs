@@ -1,8 +1,10 @@
 <template>
-  <v-container fluid fill-height test-con ref="messageBox">
+  <v-container fluid fill-height msg-container ref="messageBox">
     <v-layout column>
       <template v-for="message in messageData">
+        <div v-if="message.isCut" class="cut-line" :ref="message.updateId"></div>
         <MessageBubble
+          v-else
           :userId="message.uid"
           :nick="message.n"
           :timestamp="message.ts"
@@ -21,7 +23,10 @@ export default {
   name: "main-message",
   data() {
     return {
-      messageData: []
+      messageData: [],
+      updateRef: '',
+      loadingData: false,
+      lastTimestamp: 0
     };
   },
   components: {
@@ -34,21 +39,40 @@ export default {
   },
   methods: {
     getMessageData(ts = '') {
+      this.loadingData = true
       this.$axios.get(`http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
         .then(res => {
-          this.$refs.messageBox.scrollTop = 0;
-          this.messageData = res.data.d.reverse().map(msg => Object.assign({
+          let refTarget = Date.now(), msgData = res.data.d.reverse()
+          this.lastTimestamp = msgData[0].ts
+          this.messageData = msgData.map(msg => Object.assign({
             avatar: `http://q1.qlogo.cn/g?b=qq&nk=${msg.uid}&s=100`
-          }, msg)).concat(this.messageData)
+          }, msg)).concat([{
+            isCut: true,
+            updateId: refTarget
+          }]).concat(this.messageData)
+          this.updateRef = refTarget
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+  },
+  mounted(){
+    this.$refs.messageBox.addEventListener('scroll', e => {
+      if(e.target.scrollTop == 0 && !this.loadingData){
+        this.getMessageData(this.lastTimestamp)
+      }
+    })
+  },
+  updated(){
+    this.$refs.messageBox.scrollTop = this.$refs[this.updateRef][0].offsetTop
+    this.loadingData = false
   },
   watch: {
     actionGroupId(val, oldVal) {
-      this.messageData = []
+      // 清空并防止触发重复渲染
+      this.messageData.length = 0
+
       this.getMessageData()
     }
   }
@@ -56,7 +80,10 @@ export default {
 </script>
 
 <style scoped>
-.test-con {
+.cut-line {
+  padding-bottom: 1px;
+}
+.msg-container {
   overflow-y: auto;
   max-height: 100%;
 }
