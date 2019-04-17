@@ -48,17 +48,21 @@ export default {
       let msgObj = []
       this.message.split('[CQ:').forEach((msgClip, index) => {
         if(index == 0){
-          msgObj.push({
-            cqType: 'text',
-            msg: msgClip
-          })
+          if(msgClip){
+            msgObj.push({
+              cqType: 'text',
+              msg: msgClip
+            })
+          }
         } else {
           let sp = msgClip.split(']')
           msgObj.push(cqMsgClip(sp[0]))
-          msgObj.push({
-            cqType: 'text',
-            msg: sp[1]
-          })
+          if(sp[1]){
+            msgObj.push({
+              cqType: 'text',
+              msg: sp[1]
+            })
+          }
         }
       })
       // console.log(msgObj)
