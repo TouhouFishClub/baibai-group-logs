@@ -91,6 +91,7 @@
           display: -webkit-box;
           -webkit-line-clamp: 3;
           flex-direction: column;
+          opacity: .6;
         }
         .share-img {
           width: 60px;
