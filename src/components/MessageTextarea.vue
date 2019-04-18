@@ -1,10 +1,10 @@
 <template>
   <div textarea-box-height id="textarea">
     <v-textarea solo name="message-input" label="message textarea" hide-details no-resize></v-textarea>
-    <div class="button-groups">
-      <v-btn small>取 消</v-btn>
-      <v-btn color="info" small>发 送</v-btn>
-    </div>
+    <!--<div class="button-groups">-->
+      <!--<v-btn small>取 消</v-btn>-->
+      <!--<v-btn color="info" small>发 送</v-btn>-->
+    <!--</div>-->
   </div>
 </template>
 
