@@ -41,7 +41,10 @@ export default {
           this.inputText = ''
         })
         .catch(err => {
+          //todo: 临时在 error 更新
           console.log(err);
+          this.$store.commit('updateMsg', Date.now())
+          this.inputText = ''
         });
     }
   },
