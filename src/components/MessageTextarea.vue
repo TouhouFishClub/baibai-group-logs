@@ -1,6 +1,14 @@
 <template>
   <div class="textarea-box-height" id="textarea">
-    <v-textarea solo name="message-input" label="message textarea" hide-details no-resize ref="textContainer"></v-textarea>
+    <v-textarea
+      solo
+      name="message-input"
+      label="message textarea"
+      hide-details
+      no-resize
+      ref="textContainer"
+      v-model="inputText"
+    ></v-textarea>
     <!-- 发送按钮（临时） -->
     <v-btn @click="sendMsg">发送</v-btn>
     <!--<div class="button-groups">-->
@@ -11,15 +19,38 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: "message-textarea",
+  data() {
+    return {
+      inputText: undefined
+    }
+  },
+  computed: {
+    ...mapState([
+      'actionGroupId',
+    ])
+  },
   methods: {
     sendMsg() {
-      let ta = this.$refs.textContainer
-      console.log(ta.input)
-
+      // console.log(this.inputText)
+      this.$axios.get(`http://flanb.msharebox.com:23334/send_group_msg?group_id=${this.actionGroupId}&message=${this.inputText}`)
+        .then(res => {
+          this.$store.commit('updateMsg', Date.now())
+          this.inputText = ''
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-  }
+  },
+  // watch: {
+  //   inputText(val, oldVal){
+  //     console.log(val)
+  //     console.log(oldVal)
+  //   }
+  // }
 }
 </script>
 
