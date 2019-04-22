@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     getMessageData(ts = '') {
-      this.loadingData = true
+      this.$store.commit('onLoading', true)
       this.$axios.get(`http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
         .then(res => {
           let refTarget = Date.now(), msgData = res.data.d.reverse()
@@ -66,14 +66,14 @@ export default {
   },
   mounted(){
     this.$refs.messageBox.addEventListener('scroll', e => {
-      if(e.target.scrollTop == 0 && !this.loadingData){
+      if(e.target.scrollTop == 0 && !this.$store.state.loadingData){
         this.getMessageData(this.lastTimestamp)
       }
     })
   },
   updated(){
     this.$refs.messageBox.scrollTop = this.$refs[this.updateRef][0].offsetTop
-    this.loadingData = false
+    this.$store.commit('onLoading', false)
   },
   watch: {
     actionGroupId(val, oldVal) {

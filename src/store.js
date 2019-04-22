@@ -9,7 +9,8 @@ export default new Vuex.Store({
     isDark: false,
     actionGroupId: 0,
     titleName: 'Baibai Group Logs',
-    updateMsg: 0
+    updateMsg: 0,
+    loadingData: false,
   },
   mutations: {
     tapDrawer(state) {
@@ -25,16 +26,23 @@ export default new Vuex.Store({
       state.titleName = title
     },
     updateMsg(state, ts) {
-      state.updateMsg = ts
+      if(!state.loadingData) {
+        state.updateMsg = ts
+      }
     },
+    onLoading(state, loading) {
+      state.loadingData = loading
+    }
   },
   actions: {
-    changeGroup({ commit }, { isMobile, group_name, group_id }) {
-      if(isMobile){
-        commit('tapDrawer')
+    changeGroup({ commit, state }, { isMobile, group_name, group_id }) {
+      if(!state.loadingData) {
+        if(isMobile){
+          commit('tapDrawer')
+        }
+        commit('changeGroupId', group_id)
+        commit('changeTitle', group_name)
       }
-      commit('changeGroupId', group_id)
-      commit('changeTitle', group_name)
     }
   }
 })
