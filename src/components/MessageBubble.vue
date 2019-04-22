@@ -1,5 +1,5 @@
 <template>
-  <div class="message-item">
+  <div :class="{'message-item' : true, 'is-baibai' : userId == 2375373419}">
     <img :src="avatar" class="user-avatar">
     <div class="message-info">
       <span class="user-nick">{{nick}}</span>
@@ -94,6 +94,26 @@ export default {
       margin-left: 5px;
       color: #afafaf;
       font-size: 12px;
+    }
+  }
+  &.is-baibai {
+    padding-right: 55px;
+    padding-left: 40px;
+    text-align: right;
+    .user-avatar {
+      right: 0;
+      left: auto;
+    }
+    .msg-text {
+      text-align: left;
+      background: rgba(54, 174, 255, 0.3);
+      &:after {
+        left: auto;
+        right: -12px;
+        border: 6px solid  rgba(54, 174, 255, 0.3);
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+      }
     }
   }
 }
