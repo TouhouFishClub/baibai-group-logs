@@ -35,16 +35,17 @@ export default {
   methods: {
     sendMsg() {
       // console.log(this.inputText)
-      this.$axios.get(`http://flanb.msharebox.com:23334/send_group_msg?group_id=${this.actionGroupId}&message=${this.inputText}`)
+      this.$axios.get(`http://flanb.msharebox.com:10086/send_group_msg?gid=${this.actionGroupId}&d=${this.inputText}`)
         .then(res => {
-          this.$store.commit('updateMsg', Date.now())
-          this.inputText = ''
+          if(res.data.result == 'ok'){
+            this.$store.commit('updateMsg', Date.now())
+            this.inputText = ''
+          } else {
+            console.log(res)
+          }
         })
         .catch(err => {
-          //todo: 临时在 error 更新
           console.log(err);
-          this.$store.commit('updateMsg', Date.now())
-          this.inputText = ''
         });
     }
   },
