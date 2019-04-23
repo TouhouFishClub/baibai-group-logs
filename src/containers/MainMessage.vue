@@ -92,6 +92,7 @@ export default {
 }
 .msg-container {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   max-height: 100%;
 }
 </style>
