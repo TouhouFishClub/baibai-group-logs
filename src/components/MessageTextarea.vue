@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="textarea-box-height" id="textarea">
     <v-textarea
       solo
@@ -35,7 +35,7 @@ export default {
   methods: {
     sendMsg() {
       // console.log(this.inputText)
-      this.$axios.get(`http://flanb.msharebox.com:10086/send_group_msg?gid=${this.actionGroupId}&d=${this.inputText}`)
+      this.$axios.get(`http://flanb.msharebox.com:10086/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
         .then(res => {
           if(res.data.result == 'ok'){
             this.$store.commit('updateMsg', Date.now())
