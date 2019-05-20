@@ -20,6 +20,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import {HOST} from "../../global.config"
+
 export default {
   name: "message-textarea",
   data() {
@@ -35,7 +37,7 @@ export default {
   methods: {
     sendMsg() {
       // console.log(this.inputText)
-      this.$axios.get(`http://flanb.msharebox.com:10086/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
+      this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
         .then(res => {
           if(res.data.result == 'ok'){
             this.$store.commit('updateMsg', Date.now())

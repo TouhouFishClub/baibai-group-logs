@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import {HOST} from "../../global.config"
   export default {
     name: "group-list",
 
@@ -49,7 +50,7 @@
       }
     },
     mounted() {
-      this.$axios.get('http://flanb.msharebox.com:10086/get_group_list')
+      this.$axios.get(`${HOST}/get_group_list`)
         .then(response => {
           let res = response.data
           if(res.status === 'ok'){

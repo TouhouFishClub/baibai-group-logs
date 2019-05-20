@@ -19,6 +19,7 @@
 <script>
 import MessageBubble from "@/components/MessageBubble";
 import { mapState } from 'vuex'
+import {HOST} from "../../global.config"
 export default {
   name: "main-message",
   data() {
@@ -41,7 +42,7 @@ export default {
   methods: {
     getMessageData(ts = '') {
       this.$store.commit('onLoading', true)
-      this.$axios.get(`http://flanb.msharebox.com:10086/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
+      this.$axios.get(`${HOST}/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
         .then(res => {
           let refTarget = Date.now(), msgData = res.data.d.reverse()
           this.lastTimestamp = msgData[0].ts
