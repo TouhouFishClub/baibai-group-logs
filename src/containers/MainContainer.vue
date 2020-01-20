@@ -2,6 +2,7 @@
   <v-content class="main-content">
     <v-layout align-space-between justify-space-between column fill-height>
       <MainMessage></MainMessage>
+      <ToolTipContainer></ToolTipContainer>
       <MessageTextarea></MessageTextarea>
     </v-layout>
   </v-content>
@@ -10,16 +11,18 @@
 <script>
   import MessageTextarea from '@/components/MessageTextarea'
   import MainMessage from '@/containers/MainMessage'
+  import ToolTipContainer from '@/containers/ToolTipContainer'
   export default {
     name: "main-container",
     components: {
       MessageTextarea,
       MainMessage,
+      ToolTipContainer,
     }
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .main-content {
     height: 100%;
   }
