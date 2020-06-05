@@ -11,6 +11,9 @@ export default new Vuex.Store({
     titleName: 'Baibai Group Logs',
     updateMsg: 0,
     loadingData: false,
+    hasImage: false,
+    imgObj: null,
+    clearImage: 0,
   },
   mutations: {
     tapDrawer(state) {
@@ -32,6 +35,15 @@ export default new Vuex.Store({
     },
     onLoading(state, loading) {
       state.loadingData = loading
+    },
+    addImage(state, type) {
+      state.hasImage = type
+    },
+    changeImage(state, imgObj) {
+      state.imgObj = imgObj
+    },
+    clearImage(state){
+      state.clearImage = Date.now()
     }
   },
   actions: {

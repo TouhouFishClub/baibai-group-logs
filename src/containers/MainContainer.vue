@@ -40,7 +40,6 @@
     methods: {
       resize() {
         this.height = document.documentElement.clientHeight - 56
-
       }
     }
   }

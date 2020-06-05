@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import {HOST} from "../../global.config"
+import { HOST } from "../../global.config"
 
 export default {
   name: "message-textarea",
@@ -35,23 +35,59 @@ export default {
   computed: {
     ...mapState([
       'actionGroupId',
+      'hasImage',
+      'imgObj',
     ])
   },
   methods: {
     sendMsg() {
-      // console.log(this.inputText)
-      this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
-        .then(res => {
-          if(res.data.result == 'ok'){
-            this.$store.commit('updateMsg', Date.now())
-            this.inputText = ''
-          } else {
-            console.log(res)
-          }
+      if(this.hasImage && this.imgObj) {
+        // console.log(avatar.target.files[0])
+        let file = this.imgObj
+        let data = new FormData();
+        data.append("file", file, file.name)
+        console.log(data.get('file'))
+        // return axios.post("http://127.0.0.1:8233/file", data, {
+        this.$axios.post(`${HOST}/send_group_multipart_data`, data, {
+          headers: { "content-type": "multipart/form-data" }
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .then(res => {
+          // console.log(res.data)
+          let msg = `[CQ:image,file=send/upload/${res.data.filename}]`
+          if(this.inputText) {
+            msg += this.inputText
+          }
+          this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${msg}`)
+            .then(res => {
+              if(res.data.result == 'ok'){
+                this.$store.commit('clearImage')
+                this.inputText = ''
+                this.$store.commit('updateMsg', Date.now())
+              } else {
+                console.log(res)
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+      } else {
+        if(this.inputText){
+          // console.log(this.inputText)
+          this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
+            .then(res => {
+              if(res.data.result == 'ok'){
+                this.$store.commit('updateMsg', Date.now())
+                this.inputText = ''
+              } else {
+                console.log(res)
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      }
     }
   },
   // watch: {
