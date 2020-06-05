@@ -1,12 +1,17 @@
 <template>
   <div class="tool-tip-container">
+    <SendPicture/>
 
   </div>
 </template>
 
 <script>
+  import SendPicture from "../components/SendPicture";
   export default {
-    name: "ToolTipContainer"
+    name: "ToolTipContainer",
+    components: {
+      SendPicture,
+    }
   }
 </script>
 

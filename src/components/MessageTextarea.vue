@@ -78,6 +78,7 @@ export default {
   }
   .submit-btn {
     height: calc(100% - 30px);
+    min-height: 50px;
     border-radius: 20px;
     .icon {
       margin-right: 5px;
