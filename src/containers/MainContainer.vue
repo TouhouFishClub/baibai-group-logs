@@ -23,6 +23,10 @@
     },
     beforeMount() {
       this.resize()
+      window.onresize = () => {
+        this.screenWidth = document.documentElement.clientWidth
+        this.screenHeight = document.documentElement.clientHeight
+      }
     },
     components: {
       MessageTextarea,
@@ -39,7 +43,10 @@
     },
     methods: {
       resize() {
-        this.height = document.documentElement.clientHeight - 56
+        let fixTop = 64
+        if(this.screenWidth < 960)
+          fixTop = 56
+        this.height = document.documentElement.clientHeight - fixTop
       }
     }
   }
