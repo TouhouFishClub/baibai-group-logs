@@ -13,7 +13,14 @@
       v-model="inputText"
     ></v-textarea>
     <!-- 发送按钮（临时） -->
-    <v-btn class="submit-btn" @click="sendMsg"><i class="icon mdi mdi-send"></i>发送</v-btn>
+    <v-btn class="submit-btn" @click="sendMsg">
+      <template v-if="isSend">
+        <i class="icon loading mdi mdi-loading"></i>发送中...
+      </template>
+      <template v-else>
+        <i class="icon mdi mdi-send"></i>发送
+      </template>
+    </v-btn>
     <!--<div class="button-groups">-->
       <!--<v-btn small>取 消</v-btn>-->
       <!--<v-btn color="info" small>发 送</v-btn>-->
@@ -29,7 +36,8 @@ export default {
   name: "message-textarea",
   data() {
     return {
-      inputText: undefined
+      inputText: undefined,
+      isSend: false
     }
   },
   computed: {
@@ -41,6 +49,10 @@ export default {
   },
   methods: {
     sendMsg() {
+      if(this.isSend){
+        return
+      }
+      this.isSend = true
       if(this.hasImage && this.imgObj) {
         // console.log(avatar.target.files[0])
         let file = this.imgObj
@@ -59,6 +71,7 @@ export default {
           }
           this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${msg}`)
             .then(res => {
+              this.isSend = false
               if(res.data.result == 'ok'){
                 this.$store.commit('clearImage')
                 this.inputText = ''
@@ -68,14 +81,20 @@ export default {
               }
             })
             .catch(err => {
+              this.isSend = false
               console.log(err);
-            });
+            })
+        })
+        .catch(err => {
+          this.isSend = false
+          console.log(err);
         })
       } else {
         if(this.inputText){
           // console.log(this.inputText)
           this.$axios.get(`${HOST}/send_group_msg?gid=${this.actionGroupId}&d=${encodeURIComponent(this.inputText)}`)
             .then(res => {
+              this.isSend = false
               if(res.data.result == 'ok'){
                 this.$store.commit('updateMsg', Date.now())
                 this.inputText = ''
@@ -84,8 +103,11 @@ export default {
               }
             })
             .catch(err => {
+              this.isSend = false
               console.log(err);
             });
+        } else {
+          this.isSend = false
         }
       }
     }
@@ -100,6 +122,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@keyframes rot {
+  0% { transform: rotate(0deg) }
+  25% { transform: rotate(90deg) }
+  50% { transform: rotate(180deg) }
+  75% { transform: rotate(270deg) }
+  100% { transform: rotate(360deg) }
+}
 .textarea-box-height {
   flex: 0 0 auto;
   display: flex;
@@ -119,6 +148,9 @@ export default {
     .icon {
       margin-right: 5px;
       transform: rotate(-45deg);
+      &.loading {
+        animation: rot .5s linear infinite;
+      }
     }
   }
 }
