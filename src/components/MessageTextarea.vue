@@ -73,7 +73,7 @@ export default {
             .then(res => {
               this.isSend = false
               if(res.data.result == 'ok'){
-                this.$store.commit('clearImage')
+                this.$store.dispatch('clearTools')
                 this.inputText = ''
                 this.$store.commit('updateMsg', Date.now())
               } else {

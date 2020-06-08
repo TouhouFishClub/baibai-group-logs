@@ -55,6 +55,9 @@ export default new Vuex.Store({
         commit('changeGroupId', group_id)
         commit('changeTitle', group_name)
       }
+    },
+    clearTools({commit, state}) {
+      commit('clearImage')
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div class="send-pic">
     <v-btn icon @click="selectImage">
-      <v-icon>mdi mdi-image-size-select-actual</v-icon>
+      <v-icon>mdi mdi-camera-image</v-icon>
     </v-btn>
     <input
       type="file"
