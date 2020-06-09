@@ -1,5 +1,5 @@
 <template>
-  <div class="msg-text">
+  <div class="msg-text" :class="msgType == 'mine' ? 'mine' : ''">
     <template v-for="m in msgData">
       <span v-if="m.cqType == 'text'" v-html="formatText(m.msg)"></span>
       <template v-else-if="m.cqType == 'image'">
@@ -31,6 +31,9 @@
     props: {
       msgData: {
         require: true
+      },
+      msgType: {
+        require: true
       }
     },
     methods: {
@@ -46,27 +49,14 @@
 
 <style scoped lang="less">
   .msg-text {
-    margin-top: 10px;
-    padding: 10px;
+    padding: 8px 16px;
     background: rgba(155, 155, 155, 0.2);
     display: inline-block;
     word-break: break-all;
-    border-radius: 10px;
     position: relative;
-    min-height: 40px;
+    /*min-height: 40px;*/
     p {
       margin-bottom: 0;
-    }
-    &:after {
-      content: "";
-      height: 0;
-      width: 0;
-      border: 6px solid rgba(155, 155, 155, 0.2);
-      border-bottom-color: transparent;
-      border-left-color: transparent;
-      position: absolute;
-      left: -12px;
-      top: 10px;
     }
     .msg-image {
       max-width: 100%;
@@ -106,6 +96,10 @@
           flex-shrink: 0;
         }
       }
+    }
+    &.mine {
+      text-align: left;
+      background: rgba(54, 174, 255, 0.3);
     }
   }
 </style>

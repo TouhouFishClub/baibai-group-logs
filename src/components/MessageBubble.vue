@@ -5,7 +5,19 @@
       <span class="user-nick">{{nick}}</span>
       <span class="msg-time">{{timestamp|fmtTime}}</span>
     </div>
-    <MediaMessage :msg-data="checkMsgType"></MediaMessage>
+    <div class="message-group">
+      <div class="msg-line-bar" v-for="(msgTypes, index) in checkMsgType">
+        <MediaMessage
+          :class="[
+            checkMsgType.length > 1 ? 'inset' : 'normal',
+            index == 0 ? 'first': '',
+            index == checkMsgType.length - 1 ? 'last' : ''
+          ]"
+          :msg-data="msgTypes"
+          :msg-type="userId == 2375373419 ? 'mine' : 'other'"
+        ></MediaMessage>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,27 +51,29 @@ export default {
   },
   computed: {
     checkMsgType() {
-      let msgObj = []
-      this.message.split('[CQ:').forEach((msgClip, index) => {
-        if(index == 0){
-          if(msgClip){
-            msgObj.push({
-              cqType: 'text',
-              msg: msgClip
-            })
+      return this.message.map(msg => {
+        let msgObj = []
+        msg.split('[CQ:').forEach((msgClip, index) => {
+          if(index == 0){
+            if(msgClip){
+              msgObj.push({
+                cqType: 'text',
+                msg: msgClip
+              })
+            }
+          } else {
+            let sp = msgClip.split(']')
+            msgObj.push(cqMsgClip(sp[0]))
+            if(sp[1]){
+              msgObj.push({
+                cqType: 'text',
+                msg: sp[1]
+              })
+            }
           }
-        } else {
-          let sp = msgClip.split(']')
-          msgObj.push(cqMsgClip(sp[0]))
-          if(sp[1]){
-            msgObj.push({
-              cqType: 'text',
-              msg: sp[1]
-            })
-          }
-        }
+        })
+        return msgObj
       })
-      return msgObj
     },
 
     msg() {
@@ -96,17 +110,46 @@ export default {
       font-size: 12px;
     }
   }
+  .message-group {
+    margin-top: 10px;
+    position: relative;
+    .msg-line-bar {
+      margin-top: 1px;
+      &:first-child {
+        margin-top: 0;
+      }
+      .normal {
+        border-radius: 15px;
+      }
+      .inset {
+        border-radius: 15px;
+        border-bottom-left-radius: 6px;
+        border-top-left-radius: 6px;
+      }
+      .first {
+        border-top-left-radius: 15px;
+      }
+      .last {
+        border-bottom-left-radius: 15px;
+      }
+    }
+    &:after {
+      content: "";
+      height: 0;
+      width: 0;
+      border: 6px solid rgba(155, 155, 155, 0.2);
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      position: absolute;
+      left: -12px;
+      top: 12px;
+    }
+  }
   &.is-baibai {
     padding-right: 55px;
     padding-left: 40px;
     text-align: right;
-    .user-avatar {
-      right: 0;
-      left: auto;
-    }
-    .msg-text {
-      text-align: left;
-      background: rgba(54, 174, 255, 0.3);
+    .message-group {
       &:after {
         left: auto;
         right: -12px;
@@ -114,6 +157,23 @@ export default {
         border-bottom-color: transparent;
         border-right-color: transparent;
       }
+      .msg-line-bar {
+        .inset {
+          border-radius: 15px;
+          border-bottom-right-radius: 6px;
+          border-top-right-radius: 6px;
+        }
+        .first {
+          border-top-right-radius: 15px;
+        }
+        .last {
+          border-bottom-right-radius: 15px;
+        }
+      }
+    }
+    .user-avatar {
+      right: 0;
+      left: auto;
     }
   }
 }

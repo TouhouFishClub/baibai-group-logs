@@ -19,7 +19,8 @@
 <script>
 import MessageBubble from "@/components/MessageBubble";
 import { mapState } from 'vuex'
-import {HOST} from "../../global.config"
+import { HOST } from "../../global.config"
+const MAX_MSG_STEP_TIME = 60000
 export default {
   name: "main-message",
   data() {
@@ -44,7 +45,7 @@ export default {
       this.$store.commit('onLoading', true)
       this.$axios.get(`${HOST}/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
         .then(res => {
-          let refTarget = Date.now(), msgData = res.data.d.reverse()
+          let refTarget = Date.now(), msgData = this.mixinData(res.data.d.reverse())
           this.lastTimestamp = msgData[0].ts
           this.messageData = msgData.map(msg => Object.assign({
             avatar: `http://q1.qlogo.cn/g?b=qq&nk=${msg.uid}&s=100`
@@ -57,6 +58,29 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    mixinData (data) {
+      let newData = [], dataTmp = {}, msgGroup = [], tsTmp = 0
+      data.forEach((d, i) => {
+        if(i == 0){
+          dataTmp = d
+          msgGroup.push(d.d)
+          tsTmp = d.ts
+        } else {
+          if(d.uid == dataTmp.uid && dataTmp.ts - tsTmp < MAX_MSG_STEP_TIME){
+            msgGroup.push(d.d)
+            tsTmp = d.ts
+          } else {
+            newData.push(Object.assign({}, dataTmp, {d : msgGroup.concat([])}))
+            dataTmp = d
+            msgGroup = [d.d]
+            tsTmp = d.ts
+          }
+        }
+      })
+      newData.push(Object.assign({}, dataTmp, {d : msgGroup.concat([])}))
+      // console.log(newData)
+      return newData
     },
     refetchMsg() {
       // 清空并防止触发重复渲染
