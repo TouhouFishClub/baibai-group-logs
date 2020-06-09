@@ -8,7 +8,7 @@ module.exports = {
         'vue-router': 'VueRouter',
         'vuex': 'Vuex',
         'axios': 'axios',
-        'vuetify': 'vuetify'
+        'vuetify': 'Vuetify'
       }
     }
   },
