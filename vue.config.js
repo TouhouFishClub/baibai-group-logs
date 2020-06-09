@@ -1,6 +1,12 @@
 const isProduction = process.env.NODE_ENV === 'production'
-module.exports = {
+const path = require('path')
+const patterns = [
+  path.resolve(__dirname, 'node_modules/vuetify/dist/vuetify.css'),
+  path.resolve(__dirname, 'node_modules/@mdi/font/css/materialdesignicons.css'),
+]
+  module.exports = {
   publicPath: isProduction ? './' : '/',
+
   configureWebpack: config => {
     if (isProduction) {
       config.externals = {
@@ -12,6 +18,7 @@ module.exports = {
       }
     }
   },
+
   devServer: {
     // proxy: 'https://mb.anjia365.com',
     // proxy: 'http://192.168.3.93',
@@ -21,4 +28,11 @@ module.exports = {
     // https: true,
     disableHostCheck: true,
   },
+
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'stylus',
+      patterns: isProduction ? [] : patterns
+    }
+  }
 }
