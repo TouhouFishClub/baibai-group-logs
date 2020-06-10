@@ -1,12 +1,11 @@
 const isProduction = process.env.NODE_ENV === 'production'
 const path = require('path')
 const patterns = [
-  path.resolve(__dirname, 'node_modules/vuetify/dist/vuetify.css'),
-  path.resolve(__dirname, 'node_modules/@mdi/font/css/materialdesignicons.css'),
+  path.join(__dirname, 'node_modules/vuetify/dist/vuetify.css'),
+  // path.join(__dirname, 'node_modules/@mdi/font/css/materialdesignicons.css'),
 ]
-  module.exports = {
+module.exports = {
   publicPath: isProduction ? './' : '/',
-
   configureWebpack: config => {
     if (isProduction) {
       config.externals = {
@@ -31,7 +30,7 @@ const patterns = [
 
   pluginOptions: {
     'style-resources-loader': {
-      preProcessor: 'stylus',
+      preProcessor: 'css',
       patterns: isProduction ? [] : patterns
     }
   }
