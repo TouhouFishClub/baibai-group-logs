@@ -95,6 +95,9 @@ export default {
         this.getMessageData(this.lastTimestamp)
       }
     })
+    if(this.actionGroupId != 0) {
+      this.getMessageData()
+    }
   },
   updated(){
     this.$refs.messageBox.scrollTop = this.$refs[this.updateRef][0].offsetTop

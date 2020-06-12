@@ -30,10 +30,9 @@
 </template>
 
 <script>
-  import {HOST} from "../../global.config"
+  import { HOST } from "../../global.config"
   export default {
     name: "group-list",
-
     data () {
       return {
         groupInfo: [
