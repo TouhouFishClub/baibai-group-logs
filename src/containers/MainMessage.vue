@@ -67,7 +67,7 @@ export default {
           msgGroup.push(d.d)
           tsTmp = d.ts
         } else {
-          if(d.uid == dataTmp.uid && dataTmp.ts - tsTmp < MAX_MSG_STEP_TIME){
+          if(d.uid == dataTmp.uid && d.ts - tsTmp < MAX_MSG_STEP_TIME){
             msgGroup.push(d.d)
             tsTmp = d.ts
           } else {

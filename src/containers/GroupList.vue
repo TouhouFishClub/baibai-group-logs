@@ -13,14 +13,13 @@
           ripple
           avatar
           @click="selectGroup(group)"
-          :color="group.group_id == $store.state.actionGroupId ? 'blue': ''"
         >
           <v-list-tile-avatar>
             <img :src="group.avatar_url">
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title v-html="group.group_name"></v-list-tile-title>
+            <v-list-tile-title v-html="group.group_name" :class="group.group_id == $store.state.actionGroupId ? 'blue--text': ''"></v-list-tile-title>
             <v-list-tile-sub-title v-html="group.group_id"></v-list-tile-sub-title>
           </v-list-tile-content>
         </v-list-tile>
