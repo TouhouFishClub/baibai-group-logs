@@ -3,8 +3,12 @@
     <template v-for="m in msgData">
       <span v-if="m.cqType == 'text'" v-html="formatText(m.msg)"></span>
       <template v-else-if="m.cqType == 'image'">
-        <img class="msg-image" v-if="m.url" :src="`${HOST}/image?url=${m.url}`">
-        <img class="msg-image" v-else :src="`${HOST}/image?d=${m.file}`">
+        <viewer v-if="m.url" :images="[`${HOST}/image?url=${m.url}`]">
+          <img class="msg-image" :src="`${HOST}/image?url=${m.url}`">
+        </viewer>
+        <viewer v-else :images="[`${HOST}/image?d=${m.file}`]">
+          <img class="msg-image" :src="`${HOST}/image?d=${m.file}`">
+        </viewer>
       </template>
       <div v-else-if="m.cqType == 'share'" class="msg-share" @click="openUrl(m.url)">
         <p class="share-title">{{m.title}}</p>
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-  import {HOST} from "../../global.config"
+  import { HOST } from "../../global.config"
   export default {
     name: "media-message",
     data(){
