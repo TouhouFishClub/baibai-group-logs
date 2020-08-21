@@ -65,7 +65,7 @@ export default {
         })
         .then(res => {
           // console.log(res.data)
-          let msg = `[CQ:image,file=send/upload/${res.data.filename}]`
+          let msg = `[CQ:image,file=file:/home/hduser/upload/tk/coolq-data/cq/data/image/send/upload/${res.data.filename}]`
           if(this.inputText) {
             msg += this.inputText
           }
