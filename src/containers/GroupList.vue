@@ -48,7 +48,6 @@
 		},
     methods: {
       selectGroup(group) {
-      	console.log(group)
         this.$store.dispatch('changeGroup', Object.assign({
           isMobile: this.$refs.drawer.isMobile
         }, group))
