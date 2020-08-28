@@ -31,6 +31,7 @@
 
 <script>
   import { HOST } from "../../global.config"
+	import { mapState } from 'vuex'
   export default {
     name: "group-list",
     data () {
@@ -40,27 +41,42 @@
         ]
       }
     },
+		computed: {
+			...mapState([
+				'initNotify'
+			])
+		},
     methods: {
       selectGroup(group) {
+      	console.log(group)
         this.$store.dispatch('changeGroup', Object.assign({
           isMobile: this.$refs.drawer.isMobile
         }, group))
+      },
+      init() {
+				this.$axios.get(`${HOST}/get_group_list`)
+					.then(response => {
+						let res = response.data
+						if(res.status === 'ok'){
+							this.groupInfo = res.data.map(d => Object.assign({avatar_url: `http://p.qlogo.cn/gh/${d.group_id}/${d.group_id}/100`}, d))
+						} else {
+							console.log('请求失败')
+						}
+					})
+					.catch(error => {
+						console.log(error)
+					})
+
       }
     },
     mounted() {
-      this.$axios.get(`${HOST}/get_group_list`)
-        .then(response => {
-          let res = response.data
-          if(res.status === 'ok'){
-            this.groupInfo = res.data.map(d => Object.assign({avatar_url: `http://p.qlogo.cn/gh/${d.group_id}/${d.group_id}/100`}, d))
-          } else {
-            console.log('请求失败')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    	this.init()
+    },
+		watch: {
+			initNotify(val, oldVal){
+				this.init()
+			}
+		}
   }
 </script>
 

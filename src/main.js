@@ -6,10 +6,12 @@ import router from './router'
 import store from './store'
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
-
+import * as config from "../global.config"
 
 Vue.config.productionTip = false
 Vue.use(Viewer)
+
+Vue.prototype.$config = config
 
 Viewer.setDefaults({
   navbar: false,

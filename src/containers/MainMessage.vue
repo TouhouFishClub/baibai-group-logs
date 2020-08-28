@@ -37,10 +37,14 @@ export default {
   computed: {
     ...mapState([
       'actionGroupId',
-      'updateMsg'
+      'updateMsg',
+      'initNotify'
     ])
   },
   methods: {
+  	initMessage() {
+  		this.messageData = []
+    },
     getMessageData(ts = '') {
       this.$store.commit('onLoading', true)
       this.$axios.get(`${HOST}/chathistory?gid=${this.actionGroupId}&ts=${ts}`)
@@ -100,7 +104,9 @@ export default {
     }
   },
   updated(){
-    this.$refs.messageBox.scrollTop = this.$refs[this.updateRef][0].offsetTop
+  	if(this.messageData.length){
+      this.$refs.messageBox.scrollTop = this.$refs[this.updateRef][0].offsetTop
+    }
     this.$store.commit('onLoading', false)
   },
   watch: {
@@ -109,6 +115,9 @@ export default {
     },
     updateMsg(val, oldVal){
       this.refetchMsg()
+    },
+		initNotify(val, oldVal){
+      this.initMessage()
     }
   }
 };

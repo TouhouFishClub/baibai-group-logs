@@ -15,6 +15,7 @@ export default new Vuex.Store({
     hasImage: false,
     imgObj: null,
     clearImage: 0,
+    initNotify: 0,
   },
   mutations: {
     tapDrawer(state) {
@@ -45,6 +46,9 @@ export default new Vuex.Store({
     },
     clearImage(state){
       state.clearImage = Date.now()
+    },
+    initSys(state) {
+      state.initNotify = Date.now()
     }
   },
   actions: {
@@ -59,6 +63,11 @@ export default new Vuex.Store({
     },
     clearTools({commit, state}) {
       commit('clearImage')
+    },
+    initSystem({commit, state}) {
+      commit('changeGroupId', 0)
+      commit('changeTitle', 'Baibai Group Logs')
+      commit('initSys')
     }
   },
   plugins: [createPersistedState({
