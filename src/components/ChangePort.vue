@@ -54,6 +54,9 @@
 					})
       },
 			changePort(port) {
+				if(port == this.port) {
+					return
+        }
 				this.$axios.get(`${this.$config.HOST}/set_port?p=${port}`)
           .then(res => {
           	if(res.data && res.data.result == 'ok') {
